@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Password - TaxPaddy</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 480px;
+            width: 100%;
+            padding: 48px 40px;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .logo h1 {
+            font-size: 32px;
+            font-weight: 900;
+            color: #10B981;
+            margin-bottom: 8px;
+        }
+
+        .logo p {
+            font-size: 13px;
+            color: #6B7280;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .icon-container {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #10B981, #059669);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
+        }
+
+        .icon-container svg {
+            width: 40px;
+            height: 40px;
+            color: white;
+        }
+
+        h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #111827;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .subtitle {
+            font-size: 15px;
+            color: #6B7280;
+            text-align: center;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        input[type="password"] {
+            width: 100%;
+            padding: 14px 16px;
+            padding-right: 45px;
+            font-size: 16px;
+            border: 2px solid #E5E7EB;
+            border-radius: 12px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            font-family: inherit;
+        }
+
+        input[type="password"]:focus {
+            outline: none;
+            border-color: #10B981;
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #6B7280;
+            padding: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .toggle-password:hover {
+            color: #10B981;
+        }
+
+        .password-strength {
+            margin-top: 8px;
+        }
+
+        .strength-bar {
+            height: 4px;
+            background: #E5E7EB;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 6px;
+        }
+
+        .strength-fill {
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s, background-color 0.3s;
+        }
+
+        .strength-label {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .requirements {
+            background: #F3F4F6;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+
+        .requirements-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 10px;
+        }
+
+        .requirement {
+            font-size: 13px;
+            color: #6B7280;
+            margin-bottom: 6px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .requirement::before {
+            content: "○";
+            position: absolute;
+            left: 0;
+            color: #9CA3AF;
+        }
+
+        .requirement.met {
+            color: #10B981;
+        }
+
+        .requirement.met::before {
+            content: "✓";
+            color: #10B981;
+            font-weight: bold;
+        }
+
+        .match-indicator {
+            font-size: 13px;
+            margin-top: 6px;
+            font-weight: 500;
+        }
+
+        .match-indicator.match {
+            color: #10B981;
+        }
+
+        .match-indicator.mismatch {
+            color: #EF4444;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+            background: linear-gradient(135deg, #10B981, #059669);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.3s;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(16, 185, 129, 0.4);
+        }
+
+        .submit-btn:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .error-message {
+            background: #FEE2E2;
+            color: #DC2626;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 16px;
+            display: none;
+            border-left: 4px solid #DC2626;
+        }
+
+        .success-container {
+            display: none;
+            text-align: center;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: #ECFDF5;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            animation: scaleIn 0.5s ease-out;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .success-icon svg {
+            width: 48px;
+            height: 48px;
+            color: #10B981;
+        }
+
+        .success-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 12px;
+        }
+
+        .success-message {
+            font-size: 15px;
+            color: #6B7280;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .open-app-btn {
+            width: 100%;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+            background: linear-gradient(135deg, #10B981, #059669);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.2s;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+        }
+
+        .open-app-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .secondary-text {
+            font-size: 14px;
+            color: #6B7280;
+            margin-top: 16px;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 32px 24px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            .logo h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Logo -->
+        <div class="logo">
+            <h1>TaxPaddy</h1>
+            <p>File with Ease</p>
+        </div>
+
+        <!-- Reset Password Form -->
+        <div id="resetForm">
+            <div class="icon-container">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                </svg>
+            </div>
+
+            <h2>Create New Password</h2>
+            <p class="subtitle">Choose a strong password to secure your TaxPaddy account.</p>
+
+            <div class="error-message" id="errorMessage"></div>
+
+            <form id="passwordForm">
+                <!-- New Password -->
+                <div class="form-group">
+                    <label for="newPassword">New Password</label>
+                    <div class="input-wrapper">
+                        <input 
+                            type="password" 
+                            id="newPassword" 
+                            placeholder="Enter new password"
+                            required
+                        >
+                        <button type="button" class="toggle-password" onclick="togglePassword('newPassword')">
+                            <svg id="eyeIcon1" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="password-strength">
+                        <div class="strength-bar">
+                            <div class="strength-fill" id="strengthFill"></div>
+                        </div>
+                        <div class="strength-label" id="strengthLabel"></div>
+                    </div>
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <div class="input-wrapper">
+                        <input 
+                            type="password" 
+                            id="confirmPassword" 
+                            placeholder="Re-enter new password"
+                            required
+                        >
+                        <button type="button" class="toggle-password" onclick="togglePassword('confirmPassword')">
+                            <svg id="eyeIcon2" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="match-indicator" id="matchIndicator"></div>
+                </div>
+
+                <!-- Password Requirements -->
+                <div class="requirements">
+                    <div class="requirements-title">Password must have:</div>
+                    <div class="requirement" id="req-length">At least 12 characters</div>
+                    <div class="requirement" id="req-upper">One uppercase letter</div>
+                    <div class="requirement" id="req-lower">One lowercase letter</div>
+                    <div class="requirement" id="req-number">One number</div>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    <span id="btnText">Reset Password</span>
+                    <span class="loading" id="loading" style="display: none;"></span>
+                </button>
+            </form>
+        </div>
+
+        <!-- Success Message -->
+        <div class="success-container" id="successContainer">
+            <div class="success-icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+            <h2 class="success-title">Password Reset! 🎉</h2>
+            <p class="success-message">
+                Your password has been successfully updated!
+            </p>
+            
+            <div style="background: #F3F4F6; border-radius: 12px; padding: 24px; margin: 24px 0; text-align: left;">
+                <p style="font-weight: 600; color: #111827; margin-bottom: 12px; font-size: 16px;">📱 Next Steps:</p>
+                <ol style="color: #4B5563; line-height: 2; padding-left: 20px; margin: 0; font-size: 15px;">
+                    <li><strong>Open TaxPaddy app</strong> on your device</li>
+                    <li><strong>Tap "Sign In"</strong> button</li>
+                    <li><strong>Enter your email</strong> and new password</li>
+                    <li><strong>Start managing</strong> your taxes! 💚</li>
+                </ol>
+            </div>
+            
+            <button onclick="window.close()" class="open-app-btn" style="background: #6B7280;">
+                Close This Page
+            </button>
+            <p class="secondary-text">
+                You can now close this browser and open the app
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Supabase
+        const SUPABASE_URL = 'https://fwunffsronxwthahwbkc.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ3dW5mZnNyb254d3RoYWh3YmtjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTczNzExNTgsImV4cCI6MjA3Mjk0NzE1OH0.IwF7b-_cnLpVKjkp7g6WmAAuU7vcz9stg9iFloPAoM4';
+        
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // Get token from URL - HANDLES BOTH FORMATS
+        let token = null;
+        let type = null;
+
+        console.log('🔍 Checking URL for reset token...');
+        console.log('Full URL:', window.location.href);
+
+        // Method 1: Try query parameters (?token=...)
+        const queryParams = new URLSearchParams(window.location.search);
+        token = queryParams.get('token') || queryParams.get('access_token');
+        type = queryParams.get('type');
+        console.log('Query params:', { token: token ? 'Found ✅' : 'Not found', type });
+
+        // Method 2: Try hash parameters (#access_token=...)
+        if (!token && window.location.hash) {
+            const hashParams = new URLSearchParams(window.location.hash.substring(1));
+            token = hashParams.get('access_token') || hashParams.get('token');
+            type = type || hashParams.get('type');
+            console.log('Hash params:', { token: token ? 'Found ✅' : 'Not found', type });
+        }
+
+        // Validate token
+        if (!token || type !== 'recovery') {
+            console.error('❌ Invalid or missing token');
+            showError('Invalid or expired reset link. Please request a new password reset from the app.');
+            document.getElementById('passwordForm').style.display = 'none';
+        } else {
+            console.log('✅ Token validated successfully!');
+            // Store token for form submission
+            window.resetToken = token;
+        }
+
+        // Password strength calculation
+        function checkPasswordStrength(password) {
+            let strength = 0;
+            if (password.length >= 12) strength++;
+            if (password.length >= 16) strength++;
+            if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+            if (/\d/.test(password)) strength++;
+            if (/[^a-zA-Z\d]/.test(password)) strength++;
+            return strength;
+        }
+
+        function updateStrengthIndicator(password) {
+            const strength = checkPasswordStrength(password);
+            const fill = document.getElementById('strengthFill');
+            const label = document.getElementById('strengthLabel');
+
+            const colors = ['#EF4444', '#F59E0B', '#F59E0B', '#10B981', '#10B981'];
+            const labels = ['Weak', 'Fair', 'Good', 'Strong', 'Very Strong'];
+            const widths = ['20%', '40%', '60%', '80%', '100%'];
+
+            if (password.length > 0) {
+                fill.style.width = widths[strength - 1] || '20%';
+                fill.style.backgroundColor = colors[strength - 1] || '#EF4444';
+                label.textContent = labels[strength - 1] || 'Weak';
+                label.style.color = colors[strength - 1] || '#EF4444';
+            } else {
+                fill.style.width = '0%';
+                label.textContent = '';
+            }
+        }
+
+        function updateRequirements(password) {
+            document.getElementById('req-length').classList.toggle('met', password.length >= 12);
+            document.getElementById('req-upper').classList.toggle('met', /[A-Z]/.test(password));
+            document.getElementById('req-lower').classList.toggle('met', /[a-z]/.test(password));
+            document.getElementById('req-number').classList.toggle('met', /\d/.test(password));
+        }
+
+        function updateMatchIndicator() {
+            const newPass = document.getElementById('newPassword').value;
+            const confirmPass = document.getElementById('confirmPassword').value;
+            const indicator = document.getElementById('matchIndicator');
+
+            if (confirmPass.length > 0) {
+                if (newPass === confirmPass) {
+                    indicator.textContent = '✓ Passwords match';
+                    indicator.className = 'match-indicator match';
+                } else {
+                    indicator.textContent = '✗ Passwords don\'t match';
+                    indicator.className = 'match-indicator mismatch';
+                }
+            } else {
+                indicator.textContent = '';
+            }
+        }
+
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            input.type = input.type === 'password' ? 'text' : 'password';
+        }
+
+        function showError(message) {
+            const errorEl = document.getElementById('errorMessage');
+            errorEl.textContent = message;
+            errorEl.style.display = 'block';
+        }
+
+        function showSuccess() {
+            document.getElementById('resetForm').style.display = 'none';
+            document.getElementById('successContainer').style.display = 'block';
+        }
+
+        // Event listeners
+        document.getElementById('newPassword').addEventListener('input', function(e) {
+            updateStrengthIndicator(e.target.value);
+            updateRequirements(e.target.value);
+            updateMatchIndicator();
+        });
+
+        document.getElementById('confirmPassword').addEventListener('input', updateMatchIndicator);
+
+        // Form submission
+        document.getElementById('passwordForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            // Validation
+            if (newPassword.length < 12) {
+                showError('Password must be at least 12 characters long.');
+                return;
+            }
+
+            if (newPassword !== confirmPassword) {
+                showError('Passwords don\'t match. Please try again.');
+                return;
+            }
+
+            const strength = checkPasswordStrength(newPassword);
+            if (strength < 2) {
+                showError('Please choose a stronger password with uppercase, lowercase, and numbers.');
+                return;
+            }
+
+            // Show loading
+            document.getElementById('btnText').style.display = 'none';
+            document.getElementById('loading').style.display = 'inline-block';
+            document.getElementById('submitBtn').disabled = true;
+
+            try {
+                console.log('🔄 Updating password via Edge Function...');
+                console.log('Function URL:', 'https://fwunffsronxwthahwbkc.supabase.co/functions/v1/reset-password');
+                console.log('Token:', window.resetToken?.substring(0, 20) + '...');
+                
+                // Call your Edge Function to reset password (bypasses MFA!)
+                const response = await fetch('https://fwunffsronxwthahwbkc.supabase.co/functions/v1/reset-password', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+                    },
+                    body: JSON.stringify({
+                        token: window.resetToken,
+                        newPassword: newPassword
+                    })
+                }).catch(fetchError => {
+                    console.error('❌ Fetch failed:', fetchError);
+                    throw new Error('Network error: Unable to reach password reset service. Please check your internet connection and try again.');
+                });
+
+                console.log('Response status:', response.status);
+                console.log('Response ok:', response.ok);
+
+                const result = await response.json().catch(jsonError => {
+                    console.error('❌ Failed to parse response:', jsonError);
+                    throw new Error('Invalid response from server. Please try again.');
+                });
+                
+                console.log('Edge Function result:', result);
+
+                if (!response.ok || !result.success) {
+                    throw new Error(result.error || 'Failed to reset password. Please try again.');
+                }
+
+                // Success!
+                console.log('✅ Password reset successful!');
+                showSuccess();
+
+            } catch (error) {
+                console.error('❌ Error:', error);
+                showError(error.message || 'Failed to reset password. The link may have expired. Please request a new reset link.');
+                
+                // Reset button
+                document.getElementById('btnText').style.display = 'inline';
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('submitBtn').disabled = false;
+            }
+        });
+
+        // Try to open app on success
+        document.getElementById('openAppBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            console.log('🚀 Attempting to open TaxPaddy app...');
+            
+            // Try deep link to login screen
+            window.location.href = 'taxpaddy://auth/login';
+            
+            // Fallback: If app doesn't open in 3 seconds
+            setTimeout(function() {
+                const userAction = confirm(
+                    'Did the TaxPaddy app open?\n\n' +
+                    '• Click OK if the app opened\n' +
+                    '• Click Cancel to download the app'
+                );
+                
+                if (!userAction) {
+                    window.location.href = 'https://taxpaddy.com';
+                }
+            }, 3000);
+        });
+    </script>
+</body>
+</html>

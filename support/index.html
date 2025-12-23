@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="TaxPaddy Support - Get help with tax tracking, income management, and tax calculations">
+    <title>Support | TaxPaddy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f9fafb;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .support-card {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .support-card h2 {
+            color: #10B981;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #10B981;
+            padding-bottom: 10px;
+        }
+
+        .support-card h3 {
+            color: #059669;
+            font-size: 1.3em;
+            margin-top: 25px;
+            margin-bottom: 12px;
+        }
+
+        .support-card p {
+            margin-bottom: 15px;
+            color: #555;
+            font-size: 1.05em;
+        }
+
+        .contact-info {
+            background: #f0fdf4;
+            border-left: 4px solid #10B981;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+
+        .contact-info p {
+            margin: 10px 0;
+            font-size: 1.1em;
+        }
+
+        .contact-info strong {
+            color: #059669;
+        }
+
+        .contact-info a {
+            color: #10B981;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        .faq-item {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            font-weight: 600;
+            color: #059669;
+            font-size: 1.15em;
+            margin-bottom: 8px;
+        }
+
+        .faq-answer {
+            color: #555;
+            padding-left: 15px;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .feature-list li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+            color: #555;
+        }
+
+        .feature-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10B981;
+            font-weight: bold;
+            font-size: 1.3em;
+        }
+
+        .button {
+            display: inline-block;
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            color: white;
+            padding: 15px 35px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.1em;
+            margin-top: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 6px rgba(16, 185, 129, 0.2);
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .footer {
+            background: #1f2937;
+            color: #d1d5db;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+        }
+
+        .footer-text {
+            font-size: 0.95em;
+            color: #9ca3af;
+        }
+
+        .footer a {
+            color: #10B981;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .header p {
+                font-size: 1em;
+            }
+
+            .support-card {
+                padding: 25px;
+            }
+
+            .support-card h2 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>TaxPaddy Support</h1>
+        <p>We're here to help you manage your taxes with confidence</p>
+    </div>
+
+    <div class="container">
+        <!-- About Section -->
+        <div class="support-card">
+            <h2>About TaxPaddy</h2>
+            <p>TaxPaddy is a comprehensive Nigerian tax management mobile app designed to help individuals track their income, manage expenses, and calculate their tax obligations accurately according to Nigerian tax laws.</p>
+            
+            <h3>Key Features</h3>
+            <ul class="feature-list">
+                <li>Track income and expenses with ease</li>
+                <li>Automated tax calculations based on Nigerian tax regulations</li>
+                <li>Receipt management with cloud storage</li>
+                <li>Recurring income and expense entries</li>
+                <li>Rent relief calculations (20% cap, ₦100,000 annually)</li>
+                <li>Tax-free threshold tracking (₦800,000)</li>
+                <li>PDF export for tax reports</li>
+                <li>Loan transaction management with tax-exempt principal tracking</li>
+            </ul>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="support-card">
+            <h2>Contact Us</h2>
+            <div class="contact-info">
+                <p><strong>Email Support:</strong> <a href="mailto:support@taxpaddy.com">support@taxpaddy.com</a></p>
+                <p><strong>General Inquiries:</strong> <a href="mailto:info@taxpaddy.com">info@taxpaddy.com</a></p>
+                <p><strong>Response Time:</strong> We typically respond within 24-48 hours on business days</p>
+            </div>
+            
+            <p>For the fastest response, please include the following in your email:</p>
+            <ul class="feature-list">
+                <li>Your registered email address</li>
+                <li>Device type (iOS or Android)</li>
+                <li>App version (found in Settings)</li>
+                <li>Detailed description of your issue</li>
+                <li>Screenshots if applicable</li>
+            </ul>
+
+            <a href="mailto:support@taxpaddy.com?subject=TaxPaddy%20Support%20Request" class="button">Email Support</a>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="support-card">
+            <h2>Frequently Asked Questions</h2>
+
+            <div class="faq-item">
+                <div class="faq-question">How is my tax calculated?</div>
+                <div class="faq-answer">
+                    TaxPaddy calculates your tax based on Nigerian Personal Income Tax regulations, including the ₦800,000 tax-free threshold, various deductions (pension, NHF, NHIS, life insurance), and the progressive tax rate structure mandated by Nigerian tax law.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Is my data secure?</div>
+                <div class="faq-answer">
+                    Yes! We take your privacy seriously. All your data is encrypted and stored securely using industry-standard security practices. We comply with the Nigeria Data Protection Regulation (NDPR). You can read our full <a href="https://legal.taxpaddy.com/privacy-policy" style="color: #10B981;">Privacy Policy</a> for more details.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">What is the subscription cost?</div>
+                <div class="faq-answer">
+                    TaxPaddy offers flexible subscription options:<br>
+                    • Monthly: ₦499/month<br>
+                    • Annual: ₦5,000/year (includes one month free)<br>
+                    All subscriptions include a free trial period to explore all features.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">How do I cancel my subscription?</div>
+                <div class="faq-answer">
+                    You can cancel your subscription at any time through your device's subscription settings:
+                    <br><br>
+                    <strong>For iOS:</strong> Settings → Your Name → Subscriptions → TaxPaddy → Cancel Subscription
+                    <br><br>
+                    <strong>For Android:</strong> Google Play Store → Menu → Subscriptions → TaxPaddy → Cancel Subscription
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Can I export my tax data?</div>
+                <div class="faq-answer">
+                    Yes! TaxPaddy allows you to export your tax reports as PDF documents. Simply go to the Reports section and tap the export button to generate a comprehensive PDF of your income, expenses, and tax calculations.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">What is rent relief and how does it work?</div>
+                <div class="faq-answer">
+                    Rent relief is a tax deduction allowed under Nigerian tax law. TaxPaddy automatically applies 20% of your gross income as rent relief, capped at ₦100,000 annually. The app tracks your rent relief usage throughout the year.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">How do recurring entries work?</div>
+                <div class="faq-answer">
+                    Recurring entries are automatically created in the background using server-side processing. You don't need to open the app daily - your recurring income and expenses will be added automatically based on your schedule (daily, weekly, monthly, or yearly).
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Do I need to manually track receipts?</div>
+                <div class="faq-answer">
+                    No! TaxPaddy includes built-in receipt management. You can capture receipt photos directly in the app, and they're automatically stored in the cloud and linked to your transactions.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">How do loan transactions affect my taxes?</div>
+                <div class="faq-answer">
+                    TaxPaddy properly handles loan transactions according to Nigerian tax law. Loan principal amounts are marked as tax-exempt (they're not income), while interest paid on loans can be tracked as an expense. This ensures accurate tax calculations.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">What devices are supported?</div>
+                <div class="faq-answer">
+                    TaxPaddy is available for both iOS and Android devices. The app requires iOS 13.0 or later for iPhone users, and Android 8.0 or later for Android users.
+                </div>
+            </div>
+        </div>
+
+        <!-- Troubleshooting Section -->
+        <div class="support-card">
+            <h2>Common Issues & Solutions</h2>
+
+            <h3>Login/Authentication Issues</h3>
+            <p><strong>Problem:</strong> Can't log in or receive verification email</p>
+            <p><strong>Solution:</strong></p>
+            <ul class="feature-list">
+                <li>Check your spam/junk folder for the verification email</li>
+                <li>Ensure you're using the correct email address</li>
+                <li>Try the "Forgot Password" option to reset your password</li>
+                <li>Clear app cache and try again</li>
+                <li>Contact support if the issue persists</li>
+            </ul>
+
+            <h3>Transactions Not Syncing</h3>
+            <p><strong>Problem:</strong> Transactions not appearing or syncing across devices</p>
+            <p><strong>Solution:</strong></p>
+            <ul class="feature-list">
+                <li>Check your internet connection</li>
+                <li>Pull down to refresh on the transactions screen</li>
+                <li>Log out and log back in</li>
+                <li>Ensure you're logged into the same account on all devices</li>
+            </ul>
+
+            <h3>Incorrect Tax Calculations</h3>
+            <p><strong>Problem:</strong> Tax amount seems incorrect</p>
+            <p><strong>Solution:</strong></p>
+            <ul class="feature-list">
+                <li>Verify all income entries are correct</li>
+                <li>Check that deductions (pension, NHF, etc.) are properly entered</li>
+                <li>Ensure rent relief is calculated correctly (20% cap at ₦100,000)</li>
+                <li>Review the tax breakdown in the Reports section</li>
+                <li>Contact support with specific details if calculations still seem wrong</li>
+            </ul>
+
+            <h3>Payment/Subscription Issues</h3>
+            <p><strong>Problem:</strong> Subscription not activating or payment failing</p>
+            <p><strong>Solution:</strong></p>
+            <ul class="feature-list">
+                <li>Verify your payment method has sufficient funds</li>
+                <li>Check your bank or card isn't blocking the transaction</li>
+                <li>Ensure your device's subscription settings are correct</li>
+                <li>Try a different payment method</li>
+                <li>Contact support with your transaction ID</li>
+            </ul>
+        </div>
+
+        <!-- Feature Requests -->
+        <div class="support-card">
+            <h2>Feature Requests & Feedback</h2>
+            <p>We're constantly improving TaxPaddy based on user feedback. If you have suggestions for new features or improvements, we'd love to hear from you!</p>
+            
+            <div class="contact-info">
+                <p><strong>Send Feedback:</strong> <a href="mailto:feedback@taxpaddy.com">feedback@taxpaddy.com</a></p>
+                <p>Please include detailed descriptions of your feature request and how it would benefit you and other users.</p>
+            </div>
+        </div>
+
+        <!-- Additional Resources -->
+        <div class="support-card">
+            <h2>Additional Resources</h2>
+            <p><strong>Website:</strong> <a href="/">https://taxpaddy.com</a></p>
+            <p><strong>Privacy Policy:</strong> <a href="https://legal.taxpaddy.com/privacy-policy">https://legal.taxpaddy.com/privacy-policy</a></p>
+            <p><strong>Terms of Service:</strong> <a href="https://legal.taxpaddy.com/terms-of-service">https://legal.taxpaddy.com/terms-of-service</a></p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p style="font-size: 1.1em; margin-bottom: 15px; color: white;">© 2024 TaxPaddy. All Rights Reserved.</p>
+        <p class="footer-text" style="margin-top: 16px;">
+            <a href="/">Home</a> | 
+            <a href="https://legal.taxpaddy.com/privacy-policy">Privacy Policy</a> | 
+            <a href="https://legal.taxpaddy.com/terms-of-service">Terms of Service</a> | 
+            <a href="mailto:support@taxpaddy.com">Contact Support</a>
+        </p>
+    </div>
+</body>
+</html>
